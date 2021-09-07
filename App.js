@@ -1,32 +1,40 @@
-const header = <h1 className="title">Witaj na stronie!</h1>
+class ShoppingList extends React.Component{
 
-const classBig = "big";
+  state = {
+    items1: 'ogórki',
+    items2: 'sok',
+    items3: 'wódka'
+  }
 
-const handleClick = ()=> alert("klik!")
+  render(){
+    return(
+      <>
+        <h1>Lista zakupów</h1>
+        <ul>
+          <ItemList name={this.state.items1} example={2+2}/>
+          <ItemList name={this.state.items2}/>
+          <ItemList name={this.state.items3}/>
+        </ul>
+      </>
+    )
+  }
+}
 
-const main = (
-  <div>
-    <h1 onClick={ handleClick } className="red">Pierwszy artykuł</h1>
-    <p>
-      Loremdafijadajidnsadk dsad adasnd askn dandasdnasi sandasind asdn aid nasdnsa.
-    </p>
-  </div>
-)
+// const ItemList = (props) => {
 
-const text = "Stopka"
-const largeText = "LAAArge text"
+//   return(
+//     <li>{props.name} - {props.example}</li>
+//   )
+// }
 
-const footer =(
-<footer>
-  <p className={classBig}>{text}</p>
-  {largeText}
-</footer>
-)
+class ItemList extends React.Component{
 
-const app = [header, main, footer]
+  render(){
+    return(
+        <li>{this.props.name} - {this.props.example}</li>
+      )
+  }
 
+}
 
-
-
-
-ReactDOM.render(app, document.getElementById('root'))
+ReactDOM.render(<ShoppingList/>, document.getElementById('root'))
