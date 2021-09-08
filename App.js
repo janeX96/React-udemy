@@ -1,40 +1,30 @@
-//Przycisk, po kliknięciu dodawana jest litera do tekstu
-
-class App extends React.Component{
-
-  state = {
-    text: "",
-    btn: "dodaj kolejną cyfrę"
+class App extends React.Component {
+  state={
+    value:""
   }
 
-  handleClick = () =>{
-    // this.state.text += "A";
-    // console.log(this.state.text)
-
-    const num = Math.floor(Math.random()*10)
-
-    this.setState(() => ({
-        text: this.state.text + num
+  handleResetClick = () => {
+    this.setState({
+      value:""
     })
-    )
-
   }
 
-  render(){
-    const btnName = "stwórz liczbę"
-    return(
+  handleInputChange = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      value: e.target.value
+    })
+    
+  }
+  render() {
+    return (
       <>
-      <button onClick={this.handleClick.bind(this)}>{this.state.btn}</button>
-      <PanelResult text={this.state.text}/>
+      <input value={this.state.value} placeholder="wpisz coś" onChange={this.handleInputChange} type="text"/>
+      <button onClick={this.handleResetClick}>Reset</button>
+      <h1 className = "title">{this.state.value}</h1>
       </>
     )
   }
 }
 
-const PanelResult = (props) => {
-  return(
-    <h1>{props.text}</h1>
-  )
-}
-
-ReactDOM.render(<App btnTitle="dodaj cyfrę"/>, document.getElementById('root'))
+ReactDOM.render(<App/>, document.getElementById('root'))
