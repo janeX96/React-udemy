@@ -1,35 +1,38 @@
-class App extends React.Component {
-  state={
-    value:""
+class Message extends React.Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      messageIsActive: false
+    }
+
+    this.handleMessageButton = this.handleMessageButton.bind(this)
   }
 
-  handleClick = () => {
+
+  handleMessageButton(){
     this.setState({
-      value:""
+      messageIsActive: !this.state.messageIsActive
     })
   }
 
-  handleChange = (e) => {
-    console.log("Zawartość w evencie: " + e.target.value)
-    console.log("Zawartość przed setState: " + this.state.value)
-    this.setState({
-      value: e.target.value
-    })
-
-    console.log("Zawartość value po setState: " + this.state.value)
-  }
-  render() {
-    console.log("Zawartość value w trakcie render: " + this.state.value)
-    //state zmienia się dopiero przy renderowaniu strony
-    
-    return (
+  render(){
+    console.log(this.state.messageIsActive)
+    const text = "sadasasdasds asdsa asdsa sadsdasd ad sad sa sadasasdasds asdsa asdsa sadsdasd ad sad sa. sadasasdasds asdsa asdsa sadsdasd ad sad sa."
+    return(
       <>
-      <input value={this.state.value} placeholder="wpisz coś" onChange={this.handleChange} type="text"/>
-      <button onClick={this.handleClick}>Reset</button>
-      <h1 className = "title">{this.state.value}</h1>
+        <button onClick={this.handleMessageButton}>{this.state.messageIsActive ? "Ukryj" : "Pokaż"}</button>
+        {/* {this.state.messageIsActive ? <p>{text}</p> : null} */}
+        {this.state.messageIsActive && <p>{text}</p>}
       </>
     )
   }
+
+
 }
 
-ReactDOM.render(<App/>, document.getElementById('root'))
+ReactDOM.render(<Message/>, document.getElementById('root'))
+
+
+
+{/* <p>{this.state.messageIsActive ? text : ""}</p> */}
