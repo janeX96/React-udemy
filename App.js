@@ -2,42 +2,39 @@
 
 class App extends React.Component{
 
-  // constructor(props){
-  //     super(props);
-  //     this.state = {
-  //       text: ""
-  //     }
-  //     this.handleClick = this.handleClick.bind(this)
-  // }
-
   state = {
-    text: ""
+    text: "",
+    btn: "dodaj kolejną cyfrę"
   }
 
   handleClick = () =>{
     // this.state.text += "A";
     // console.log(this.state.text)
 
-    const letter = "A"
-    // this.setState({
-    //   text: this.state.text+letter
-    // })
+    const num = Math.floor(Math.random()*10)
 
     this.setState(() => ({
-        text: this.state.text + letter
+        text: this.state.text + num
     })
     )
 
   }
 
   render(){
+    const btnName = "stwórz liczbę"
     return(
       <>
-      <button onClick={this.handleClick.bind(this)}>Dodaj "A"</button>
-      <h1>{this.state.text}</h1>
+      <button onClick={this.handleClick.bind(this)}>{this.state.btn}</button>
+      <PanelResult text={this.state.text}/>
       </>
     )
   }
 }
 
-ReactDOM.render(<App/>, document.getElementById('root'))
+const PanelResult = (props) => {
+  return(
+    <h1>{props.text}</h1>
+  )
+}
+
+ReactDOM.render(<App btnTitle="dodaj cyfrę"/>, document.getElementById('root'))
