@@ -1,7 +1,17 @@
-const PositiveMessage = () => <p>Możesz obejrzeć ten film</p>
 
-const NegativeMessage = () => <p>Nie możesz obejrzeć tego filmu jeśli masz mniej niż 16 lat!</p>
-
+const displayMessage = (isConfirmed, isFormSubmitted) => {
+  if(isFormSubmitted){
+      if(isConfirmed){
+      return <ValidationMessage txt="Możesz obejrzeć film"/>
+    }
+    else{
+      return <ValidationMessage txt="Nie możesz obejrzeć tego filmu!"/>
+    }
+  }
+  else{
+    return null;
+  }
+}
 
 const ValidationMessage = (props) => {
   //destrukturyzacja
@@ -28,20 +38,19 @@ class TicketShop extends React.Component{
     })
   }
 
-  displayMessage = () => {
-    if(this.state.isFormSubmitted){
-        if(this.state.isConfirmed){
-        return <ValidationMessage txt="Możesz obejrzeć film"/>
-      }
-      else{
-        return <ValidationMessage txt="Nie możesz obejrzeć tego filmu!"/>
-      }
-    }
-    else{
-      return null;
-    }
-    
-  }
+  // displayMessage = () => {
+  //   if(this.state.isFormSubmitted){
+  //       if(this.state.isConfirmed){
+  //       return <ValidationMessage txt="Możesz obejrzeć film"/>
+  //     }
+  //     else{
+  //       return <ValidationMessage txt="Nie możesz obejrzeć tego filmu!"/>
+  //     }
+  //   }
+  //   else{
+  //     return null;
+  //   }
+  // }
 
   handleFormSubmit= (e) => {
     e.preventDefault()
@@ -56,7 +65,7 @@ class TicketShop extends React.Component{
 
   render(){
     //destrukturyzacja, wyodrębnianie elementu
-    const {isConfirmed} = this.state
+    const {isConfirmed, isFormSubmitted} = this.state
     //
     console.log(isConfirmed)
 
@@ -70,7 +79,7 @@ class TicketShop extends React.Component{
           <button type="submit">Kup bilet</button>
         </form>
 
-        {this.displayMessage()}
+        {displayMessage(isConfirmed, isFormSubmitted)}
       </>
     )
   }
