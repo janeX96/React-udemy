@@ -3,6 +3,17 @@ const PositiveMessage = () => <p>Możesz obejrzeć ten film</p>
 const NegativeMessage = () => <p>Nie możesz obejrzeć tego filmu jeśli masz mniej niż 16 lat!</p>
 
 
+const ValidationMessage = (props) => {
+  //destrukturyzacja
+  const {txt} = props
+  //
+
+  return(
+    <p>{txt}</p>
+  )
+}
+
+
 class TicketShop extends React.Component{
 
   state = {
@@ -20,10 +31,10 @@ class TicketShop extends React.Component{
   displayMessage = () => {
     if(this.state.isFormSubmitted){
         if(this.state.isConfirmed){
-        return <PositiveMessage/>
+        return <ValidationMessage txt="Możesz obejrzeć film"/>
       }
       else{
-        return <NegativeMessage/>
+        return <ValidationMessage txt="Nie możesz obejrzeć tego filmu!"/>
       }
     }
     else{
@@ -44,7 +55,11 @@ class TicketShop extends React.Component{
   }
 
   render(){
-    console.log(this.state.isConfirmed)
+    //destrukturyzacja, wyodrębnianie elementu
+    const {isConfirmed} = this.state
+    //
+    console.log(isConfirmed)
+
     return(
       <>
         <h1>Kup bilet na horror roku!</h1>
