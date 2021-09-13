@@ -1,18 +1,3 @@
-
-const displayMessage = (isConfirmed, isFormSubmitted) => {
-  if(isFormSubmitted){
-      if(isConfirmed){
-      return <ValidationMessage txt="Możesz obejrzeć film"/>
-    }
-    else{
-      return <ValidationMessage txt="Nie możesz obejrzeć tego filmu!"/>
-    }
-  }
-  else{
-    return null;
-  }
-}
-
 const ValidationMessage = (props) => {
   //destrukturyzacja
   const {txt} = props
@@ -23,6 +8,19 @@ const ValidationMessage = (props) => {
   )
 }
 
+const OrderForm = (props) => {
+  const {submit, checked, change} = props;
+
+  return(
+     <form onSubmit={submit}>
+  <input type="checkbox" id="age" onChange={change} checked={checked}/>
+  <label htmlFor="age">Mam conajmniej 16 lat</label>
+  <br/>
+  <button type="submit">Kup bilet</button>
+</form>
+  )
+ 
+}
 
 class TicketShop extends React.Component{
 
@@ -38,19 +36,19 @@ class TicketShop extends React.Component{
     })
   }
 
-  // displayMessage = () => {
-  //   if(this.state.isFormSubmitted){
-  //       if(this.state.isConfirmed){
-  //       return <ValidationMessage txt="Możesz obejrzeć film"/>
-  //     }
-  //     else{
-  //       return <ValidationMessage txt="Nie możesz obejrzeć tego filmu!"/>
-  //     }
-  //   }
-  //   else{
-  //     return null;
-  //   }
-  // }
+  displayMessage = () => {
+    if(this.state.isFormSubmitted){
+        if(this.state.isConfirmed){
+        return <ValidationMessage txt="Możesz obejrzeć film"/>
+      }
+      else{
+        return <ValidationMessage txt="Nie możesz obejrzeć tego filmu!"/>
+      }
+    }
+    else{
+      return null;
+    }
+  }
 
   handleFormSubmit= (e) => {
     e.preventDefault()
@@ -72,14 +70,11 @@ class TicketShop extends React.Component{
     return(
       <>
         <h1>Kup bilet na horror roku!</h1>
-        <form onSubmit={this.handleFormSubmit}>
-          <input type="checkbox" id="age" onChange={this.handleCheckboxChange} defaultchcked={this.state.isConfirmed}/>
-          <label htmlFor="age">Mam conajmniej 16 lat</label>
-          <br/>
-          <button type="submit">Kup bilet</button>
-        </form>
-
-        {displayMessage(isConfirmed, isFormSubmitted)}
+        <OrderForm change={this.handleCheckboxChange} 
+        submit={this.handleFormSubmit}
+        checked={isConfirmed}
+        />
+        {this.displayMessage()}
       </>
     )
   }
