@@ -1,5 +1,5 @@
 const Cash = (props) => {
-  const value = (props.cash / props.ratio).toFixed(2)
+  const value = (props.cash / props.ratio * props.price).toFixed(2)
   return(
       <div>{props.title} {props.cash <= 0 ? "" : value}</div>
   )
@@ -8,9 +8,17 @@ const Cash = (props) => {
 class ExchangeCounter extends React.Component {
   state={
     amount: "",
+    product: "gas"
   }
 
-  currencies = [
+  static defaultProps = {
+    currencies : [
+    {
+      id: 0,
+      name: 'zloty',
+      ratio: 1,
+      title: 'Wartość w złotych:'
+    },
     {
       id: 1,
       name: 'dollar',
@@ -25,7 +33,14 @@ class ExchangeCounter extends React.Component {
       name: 'pound',
       ratio: 5.20,
       title: 'Wartość w funtach:'}
-  ]
+   ],
+   prices: {
+     electricity: 0.51,
+     gas: 4.76,
+     oranges: 3.79
+   }
+  }
+  
 
   handleChange = e => {
     this.setState({
@@ -33,24 +48,58 @@ class ExchangeCounter extends React.Component {
     })
   }
 
-  render() {
-    const {amount} = this.state
+  handleSelect = e => {
+    this.setState({
+      product: e.target.value,
+      amount: ""
+    })
+  }
 
-    const calculators = this.currencies.map(currency => (
-      <Cash key={currency.id} ratio={currency.ratio} title={currency.title} cash={amount}/>
+  insertSuffix(select){
+    if(select === "electricity"){
+      return <em>kWh</em>
+    }
+    else if(select === "gas"){
+      return <em>litrów</em>
+    }
+    else if(select === "oranges"){
+      return <em>kilogramów</em>
+    }
+    else{
+      return null
+    }
+  }
+
+  selectPrice(select){
+     return this.props.prices[select]
+  }
+
+  render() {
+    const {amount,product} = this.state
+    const price = this.selectPrice(product)
+
+    const calculators = this.props.currencies.map(currency => (
+      <Cash key={currency.id} ratio={currency.ratio} title={currency.title} cash={amount} price={price}/>
     ))
 
     return (
       <div class="app">
+        <label>Wybierz produkt:
+          <select value={product} onChange={this.handleSelect}>
+            <option value="electricity"> prąd</option>
+            <option value="gas">benzyna</option>
+            <option value="oranges">pomarańcze</option>
+          </select>
+        </label>
+        <br/>
         <label>
           <input 
           type="number"
           value={this.state.amount}
           onChange={this.handleChange}
           />
+          {this.insertSuffix(this.state.product)}
         </label>
-        {/* <Cash cash={amount} ratio={ratioDollar} title="wartosć w dolarach"/>
-        <Cash cash={amount} ratio={ratioEuro} title="wartosć w euro"/> */}
         {calculators}
       </div>
     )
