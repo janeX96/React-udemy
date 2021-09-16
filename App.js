@@ -1,38 +1,64 @@
-class App extends React.Component{
-  state={
-    items: [
-      { id: 1, name: "herbata", active: true },
-      { id: 2, name: "ziemniaki", active: false },
-      { id: 3, name: "kasza", active: true },
-      { id: 4, name: "zupa wodna", active: true },
-      { id: 5, name: "wrzątek", active: false },
-      { id: 6, name: "chleb", active: true },
-    ],
-
+class Form extends React.Component {
+  state ={
+    city: "Londyn",
+    text: "",
+    isLoved: true,
+    number: "2",
   }
 
-  handleChangeStatus = (id) => {
-    console.log("działa, id to: " + id)
-
-    const items = this.state.items.map(item=> {
-      if(id === item.id){
-        item.active = !item.active
-      }
-
-     return item
-    })
-
+  handleCityChange = e => {
     this.setState({
-      items: items
+      city: e.target.value
     })
   }
 
-  render(){
-    return(
-      <>
-        <Header items={this.state.items}/>
-        <ListItems items = {this.state.items} changeStatus={this.handleChangeStatus}/>
-      </>
-    );
+  handleTextChange = e => {
+    this.setState({
+      text: e.target.value
+    })
+  }
+
+  handleIsLovedChange = e => {
+    this.setState({
+      isLoved: e.target.checked
+    })
+  }
+
+  handleVisitsNumberChange(e){
+    this.setState({
+      number: event.target.number
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <label>
+          Podaj miasto
+          <input value={this.state.city} onChange={this.handleCityChange} type="text"/>
+        </label>
+        <br/>
+        <label>Napisz coś o tym mieście
+          <textarea value={this.state.text} onChange={this.handleTextChange}></textarea>
+        </label>
+        <br/>
+        <label>
+          Czy lubisz to miasto?
+          <input type="checkbox" checked={this.state.checked} onChange={this.handleIsLovedChange}/>
+        </label>
+        <label>
+          Ile razy byłęś w tym mieście?
+          <select value={this.state.number} onChange={this.handleVisitsNumberChange.bind(this)}>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="więcej">więcej</option>
+          </select>
+        </label>
+      </div>
+    )
   }
 }
+
+ReactDOM.render(<Form/>, document.getElementById('root'))
