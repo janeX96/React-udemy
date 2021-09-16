@@ -8,14 +8,12 @@ class OmenGenerator extends React.Component{
     ],
     drawn: "",
     newOmen: "",
-    
+
   }
 
   handleRandomOmen = () =>{
-    const min = 0
-    const max = this.state.omens.length-1
-    const random = parseInt(Math.floor(Math.random() * (max - min + 1)) + min);
-  
+    //prościej
+    const random = Math.floor(Math.random() * this.state.omens.length);
     this.setState({
       drawn: this.state.omens[random]
     })
@@ -23,12 +21,17 @@ class OmenGenerator extends React.Component{
 
   handleAddOmen = () =>{
     if(this.state.newOmen.length>0){
-      const omens = this.state.omens
-    omens.push(this.state.newOmen)
-    this.setState({
+      //kopia tablicy
+     const omens = [...this.state.omens]
+     const omen = this.state.newOmen
+     omens.push(omen)
+
+     this.setState({
       omens:omens,
       newOmen: ""
-    })
+     })
+     
+     alert('dodałem nową wróżbę, aktualne wróżby to: ' + omens)
     }
   }
 
