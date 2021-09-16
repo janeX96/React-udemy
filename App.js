@@ -1,80 +1,56 @@
-class Form extends React.Component {
-  state ={
-    city: "Londyn",
-    text: "",
-    isLoved: true,
-    number: "2",
-  }
+// const Dollars = (props) => (
+//   <div>Wartość w dolarach: {props.cash <=0 ? "" : (props.cash / props.ratio).toFixed(2)}</div>
+// )
 
-  handleCityChange = e => {
-    this.setState({
-      city: e.target.value
-    })
-  }
+// const Euros = (props) => {
+//   const value = (props.cash / props.ratio).toFixed(2)
+//   return(
+//       <div>Wartość w euro: {props.cash <= 0 ? "" : value}</div>
+//   )
+// }
 
-  handleTextChange = e => {
-    this.setState({
-      text: e.target.value
-    })
-  }
 
-  handleIsLovedChange = e => {
-    this.setState({
-      isLoved: e.target.checked
-    })
-  }
 
-  handleVisitsNumberChange(e){
-    this.setState({
-      number: event.target.number
-    })
-  }
+//w jednym komponencie
+const Cash = (props) => {
+  const value = (props.cash / props.ratio).toFixed(2)
+  return(
+      <div>{props.title} {props.cash <= 0 ? "" : value}</div>
+  )
+}
 
+class ExchangeCounter extends React.Component {
+  state={
+    amount: "",
+    ratioDollar: 3.6,
+    ratioEuro: 4.2
+  }
 
   handleChange = e => {
-    if(e.target.type === "checkbox"){
-      this.setState({
-        [e.target.name] : e.target.checked
-      })
-    }
-    else{
-       this.setState({
-         [e.target.name] : e.target.value
-      })
-    }
-   
+    this.setState({
+      amount: e.target.value
+    })
   }
 
   render() {
+    const {amount,ratioDollar,ratioEuro} = this.state
+
     return (
-      <div>
+      <div class="app">
         <label>
-          Podaj miasto
-          <input name="city" value={this.state.city} onChange={this.handleChange} type="text"/>
+          <input 
+          type="number"
+          value={this.state.amount}
+          onChange={this.handleChange}
+          />
         </label>
-        <br/>
-        <label>Napisz coś o tym mieście
-          <textarea name="text" value={this.state.text} onChange={this.handleChange}></textarea>
-        </label>
-        <br/>
-        <label>
-          Czy lubisz to miasto?
-          <input name="isLoved" type="checkbox" checked={this.state.isLoved} onChange={this.handleChange}/>
-        </label>
-        <br/>
-        <label>
-          Ile razy byłęś w tym mieście?
-          <select name="number" value={this.state.number} onChange={this.handleChange}>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="więcej">więcej</option>
-          </select>
-        </label>
+        {/* <Dollars cash={amount} ratio={ratioDollar}/>
+        <Euros cash={amount} ratio={ratioEuro}/> */}
+        <Cash cash={amount} ratio={ratioDollar} title="wartosć w dolarach"/>
+        <Cash cash={amount} ratio={ratioEuro} title="wartosć w euro"/>
       </div>
     )
   }
 }
 
-ReactDOM.render(<Form/>, document.getElementById('root'))
+ReactDOM.render(<ExchangeCounter/>, document.getElementById('root'))
