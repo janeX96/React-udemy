@@ -1,58 +1,69 @@
-class OmenGenerator extends React.Component{
+const Person = (props) => (<p>{props.fname} {props.lname}</p>)
+
+
+class List extends React.Component{
   state = {
-    omens: 
-    [
-      "pierwsza wróżba",
-      "druga wróżba",
-      "trzecia wróżba"
-    ],
-    drawn: "",
-    newOmen: "",
-
+    persons: [
+      {
+        id: 12,
+        fname: "Jan",
+        lname: "K."
+      },
+      {
+        id: 13,
+        fname: "Marysia",
+        lname: "S."
+      },
+      {
+        id: 14,
+        fname: "Maciej",
+        lname: "L."
+      },
+      {
+        id: 15,
+        fname: "Agata",
+        lname: "P."
+      }
+    ]
   }
 
-  handleRandomOmen = () =>{
-    //prościej
-    const random = Math.floor(Math.random() * this.state.omens.length);
-    this.setState({
-      drawn: this.state.omens[random]
-    })
+  showPersons = () => {
+    const persons = this.state.persons.map(person =>(
+      <li>
+        <Person fname={person.fname} lname={person.lname}/>
+        <button onClick={()=>this.handleDeletePerson(person)}>usuń</button>
+      </li>
+    ))
+  
+    return persons
   }
-
-  handleAddOmen = () =>{
-    if(this.state.newOmen.length>0){
-      //kopia tablicy
-     const omens = [...this.state.omens]
-     const omen = this.state.newOmen
-     omens.push(omen)
-
-     this.setState({
-      omens:omens,
-      newOmen: ""
-     })
-     
-     alert('dodałem nową wróżbę, aktualne wróżby to: ' + omens)
+  
+  handleDeletePerson = (person) => {
+    const persons = [...this.state.persons]
+    const index = persons.indexOf(person)
+    console.log(index)
+    if(index !== -1){
+      persons.splice(index,1)
+      this.setState({
+         persons: persons
+      })
     }
-  }
-
-  handleChange = e => {
-    this.setState({
-      newOmen: e.target.value
-    })
+    
   }
 
   render(){
     return(
       <>
-      <button onClick={this.handleRandomOmen}>Zobacz wróżbę</button>
-      <br/>
-      <input value={this.state.newOmen} type="text" onChange={this.handleChange}/>
-      <button onClick={this.handleAddOmen}>Dodaj wróżbę</button>
-      <br/>
-      <h1>{this.state.drawn}</h1>
+      <h1>test</h1>
+      <ul>
+        {this.showPersons()}
+      </ul>
       </>
     )
   }
+
+ 
+
 }
 
-ReactDOM.render(<OmenGenerator/>, document.getElementById('root'))
+ReactDOM.render(<List/>, document.getElementById('root'))
