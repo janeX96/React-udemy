@@ -1,69 +1,75 @@
-const Person = (props) => (<p>{props.fname} {props.lname}</p>)
+class Clicker extends React.Component {
 
-
-class List extends React.Component{
   state = {
-    persons: [
-      {
-        id: 12,
-        fname: "Jan",
-        lname: "K."
-      },
-      {
-        id: 13,
-        fname: "Marysia",
-        lname: "S."
-      },
-      {
-        id: 14,
-        fname: "Maciej",
-        lname: "L."
-      },
-      {
-        id: 15,
-        fname: "Agata",
-        lname: "P."
-      }
-    ]
+    number1: 0,
+    number2: 0,
+    number3: 0,
+
   }
 
-  showPersons = () => {
-    const persons = this.state.persons.map(person =>(
-      <li>
-        <Person fname={person.fname} lname={person.lname}/>
-        <button onClick={()=>this.handleDeletePerson(person)}>usuń</button>
-      </li>
-    ))
-  
-    return persons
+  handleClick1 = () => {
+    this.setState({
+      number1: this.state.number1 + 1,
+    })
+    // console.log(this.state.number1 + " w metodzie handleClick")
   }
+
+  handleClick2 = () => {
+    this.setState({
+      number2: this.state.number2 + 1,
+    })
+    this.setState({
+      number2: this.state.number2 + 1,
+    })
+    this.setState({
+      number2: this.state.number2 + 1,
+    })
+  }
+
+  handleClick3 = () => {
+
+    this.setState((state) => {
+      // console.log(state)
+      return{
+        number3: this.state.number3 + 1,
+      }
+    })
   
-  handleDeletePerson = (person) => {
-    const persons = [...this.state.persons]
-    const index = persons.indexOf(person)
-    console.log(index)
-    if(index !== -1){
-      persons.splice(index,1)
-      this.setState({
-         persons: persons
-      })
-    }
-    
+    this.setState((state) => {
+      // console.log(state)
+      return{
+        number3: this.state.number3 + 1,
+      }
+    })
+
+    this.setState((prevState) => {
+      console.log(prevState)
+      console.log(this.state)
+      return{
+        number3: this.state.number3 + 1,
+      }
+    })
+    console.log(this.state.number3)
   }
 
   render(){
+
+    // console.log(this.state.number1 + " w metodzie render")
+
     return(
       <>
-      <h1>test</h1>
-      <ul>
-        {this.showPersons()}
-      </ul>
+      <div>
+        <button onClick={this.handleClick1}>Podbij o 1</button>
+        <h1>{this.state.number1}</h1>
+        <button onClick={this.handleClick2}>Podbij o 3</button>
+        <h1>{this.state.number2}</h1>
+        <button onClick={this.handleClick3}>Podbij o 3</button>
+        <h1>{this.state.number3}</h1>
+      </div>
       </>
     )
   }
 
- 
-
 }
 
-ReactDOM.render(<List/>, document.getElementById('root'))
+ReactDOM.render(<Clicker/>, document.getElementById('root'))
