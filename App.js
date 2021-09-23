@@ -1,50 +1,69 @@
 class App extends React.Component {
+  state = {
+    status: true,
 
-  constructor(props){
-    super(props)
-    this.state = {}
-    console.log("Wywołanie metody constructor")
-  }
-
-  componentWillMount(){
-    console.log('Wywołanie metody componentWillMount')
   }
 
   componentDidMount(){
-    console.log('Wywołanie metody componentDidMount')
-    this.setState({})
+    // console.log("Aplikacja zamontowana")
   }
 
   componentDidUpdate(){
-    console.log('Wywołanie metody componentDidUpdate')
+    // console.log("Aplikacja aktualizowana")
   }
+
   render() {
-    console.log('Wywołanie metody render')
+    // console.log("render")
     return (
       <div>
-         <p>
-        lifecycle - montowanie komponentu
-      </p>
-      <Child/>
+       <button onClick={()=> this.setState({status: !this.state.status})}>Przełącz</button>
+       <Child1 status={this.state.status}/>
+       {this.state.status && <Child2 status={this.state.status}/>}
       </div>
      
     )
   }
 }
 
-class Child extends React.Component{
+class Child1 extends React.Component{
   componentDidMount(){
-    console.log(`
-    -----------------------
-    Wywołanie metody componentDidMount w kompon. Child`)
-    this.setState({})
+    // console.log("(child1) Aplikacja zamontowana)")
   }
 
+  componentDidUpdate(){
+    // console.log("(child1)  Aplikacja aktualizowana")
+  }
   render() {
-    console.log('Wywołanie metody render w kompon. Child')
+    // console.log("(child1)  render")
     return (
-      <h1>child</h1>
+      <div>
+        {String(this.props.status)}
+      </div>
     )
   }
 }
+
+class Child2 extends React.Component{
+  componentDidMount(){
+    console.log("(child2) komp. zamontowany)")
+  }
+
+  componentDidUpdate(){
+    console.log("(child2)  komp. aktualizowany")
+  }
+
+  componentWillUnmount(){
+    console.log("(child2)  komp. odmontowany")
+  }
+
+  render() {
+    console.log("(child2)  render")
+    return (
+      <div>
+        Komponent child2 zamontowany
+      </div>
+    )
+  }
+}
+
 ReactDOM.render(<App/>, document.getElementById('root'))
