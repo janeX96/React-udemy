@@ -1,75 +1,50 @@
-class Clicker extends React.Component {
+class App extends React.Component {
 
-  state = {
-    number1: 0,
-    number2: 0,
-    number3: 0,
-
+  constructor(props){
+    super(props)
+    this.state = {}
+    console.log("Wywołanie metody constructor")
   }
 
-  handleClick1 = () => {
-    this.setState({
-      number1: this.state.number1 + 1,
-    })
-    // console.log(this.state.number1 + " w metodzie handleClick")
+  componentWillMount(){
+    console.log('Wywołanie metody componentWillMount')
   }
 
-  handleClick2 = () => {
-    this.setState({
-      number2: this.state.number2 + 1,
-    })
-    this.setState({
-      number2: this.state.number2 + 1,
-    })
-    this.setState({
-      number2: this.state.number2 + 1,
-    })
+  componentDidMount(){
+    console.log('Wywołanie metody componentDidMount')
+    this.setState({})
   }
 
-  handleClick3 = () => {
-
-    this.setState((state) => {
-      // console.log(state)
-      return{
-        number3: this.state.number3 + 1,
-      }
-    })
-  
-    this.setState((state) => {
-      // console.log(state)
-      return{
-        number3: this.state.number3 + 1,
-      }
-    })
-
-    this.setState((prevState) => {
-      console.log(prevState)
-      console.log(this.state)
-      return{
-        number3: this.state.number3 + 1,
-      }
-    })
-    console.log(this.state.number3)
+  componentDidUpdate(){
+    console.log('Wywołanie metody componentDidUpdate')
   }
-
-  render(){
-
-    // console.log(this.state.number1 + " w metodzie render")
-
-    return(
-      <>
+  render() {
+    console.log('Wywołanie metody render')
+    return (
       <div>
-        <button onClick={this.handleClick1}>Podbij o 1</button>
-        <h1>{this.state.number1}</h1>
-        <button onClick={this.handleClick2}>Podbij o 3</button>
-        <h1>{this.state.number2}</h1>
-        <button onClick={this.handleClick3}>Podbij o 3</button>
-        <h1>{this.state.number3}</h1>
+         <p>
+        lifecycle - montowanie komponentu
+      </p>
+      <Child/>
       </div>
-      </>
+     
     )
   }
-
 }
 
-ReactDOM.render(<Clicker/>, document.getElementById('root'))
+class Child extends React.Component{
+  componentDidMount(){
+    console.log(`
+    -----------------------
+    Wywołanie metody componentDidMount w kompon. Child`)
+    this.setState({})
+  }
+
+  render() {
+    console.log('Wywołanie metody render w kompon. Child')
+    return (
+      <h1>child</h1>
+    )
+  }
+}
+ReactDOM.render(<App/>, document.getElementById('root'))
