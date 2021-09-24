@@ -1,69 +1,38 @@
-class App extends React.Component {
+class Counter extends React.Component{
   state = {
-    status: true,
-
+    result: 1,
+    ratio: 2
   }
 
-  componentDidMount(){
-    // console.log("Aplikacja zamontowana")
+  handleMultiplication = () =>{
+    this.setState((state)=>(
+      {
+        result: state.result * state.ratio
+      }
+    ))
   }
+    
+    componentDidUpdate() {
+      if(this.state.result > 1000 && this.state.ratio ===2){
+        this.setState({
+          ratio: 0.5
+        })
+      }else if(this.state.result < 1 && this.state.ratio === 0.5){
+        this.setState({
+          ratio: 2
+        })
+      }
+    }
 
-  componentDidUpdate(){
-    // console.log("Aplikacja aktualizowana")
-  }
-
-  render() {
-    // console.log("render")
-    return (
+  render(){
+    return(
       <div>
-       <button onClick={()=> this.setState({status: !this.state.status})}>Przełącz</button>
-       <Child1 status={this.state.status}/>
-       {this.state.status && <Child2 status={this.state.status}/>}
-      </div>
-     
-    )
-  }
-}
-
-class Child1 extends React.Component{
-  componentDidMount(){
-    // console.log("(child1) Aplikacja zamontowana)")
-  }
-
-  componentDidUpdate(){
-    // console.log("(child1)  Aplikacja aktualizowana")
-  }
-  render() {
-    // console.log("(child1)  render")
-    return (
-      <div>
-        {String(this.props.status)}
+        <p>Kalkulator</p>
+        <button onClick={this.handleMultiplication}>{`Pomnóż przez ${this.state.ratio}`}</button>
+        <h1>Wynik: {this.state.result}</h1>
       </div>
     )
   }
 }
 
-class Child2 extends React.Component{
-  componentDidMount(){
-    console.log("(child2) komp. zamontowany)")
-  }
-
-  componentDidUpdate(){
-    console.log("(child2)  komp. aktualizowany")
-  }
-
-  componentWillUnmount(){
-    console.log("(child2)  komp. odmontowany")
-  }
-
-  render() {
-    console.log("(child2)  render")
-    return (
-      <div>
-        Komponent child2 zamontowany
-      </div>
-    )
-  }
-}
-
-ReactDOM.render(<App/>, document.getElementById('root'))
+ReactDOM.render(<Counter/>, document.getElementById('root'))
