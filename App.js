@@ -1,38 +1,44 @@
-class Counter extends React.Component{
+class Clock extends React.Component{
   state = {
-    result: 1,
-    ratio: 2
+   time: this.getTime()
   }
 
-  handleMultiplication = () =>{
-    this.setState((state)=>(
+  interval = ""
+
+  getTime(){
+    const currentTime = new Date();
+    // console.log(currentTime)
+    return (
       {
-        result: state.result * state.ratio
+        hours : currentTime.getHours(),
+        minutes: currentTime.getMinutes(),
+        seconds: currentTime.getSeconds()
       }
-    ))
+    )
   }
-    
-    componentDidUpdate() {
-      if(this.state.result > 1000 && this.state.ratio ===2){
-        this.setState({
-          ratio: 0.5
-        })
-      }else if(this.state.result < 1 && this.state.ratio === 0.5){
-        this.setState({
-          ratio: 2
-        })
-      }
-    }
+
+  setTime(){
+    const time = this.getTime()
+    this.setState({time})
+  }
+
+  componentDidMount(){
+    this.interval = setInterval(()=> this.setTime(), 1000)
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.interval)
+  }
 
   render(){
+    this.getTime()
+    const {hours, minutes, seconds} = this.state.time
     return(
       <div>
-        <p>Kalkulator</p>
-        <button onClick={this.handleMultiplication}>{`Pomnóż przez ${this.state.ratio}`}</button>
-        <h1>Wynik: {this.state.result}</h1>
+       {hours} : {minutes} : {seconds}
       </div>
     )
   }
 }
 
-ReactDOM.render(<Counter/>, document.getElementById('root'))
+ReactDOM.render(<Clock/>, document.getElementById('root'))
