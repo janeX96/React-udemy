@@ -1,74 +1,48 @@
 import React, { Component } from 'react';
 import './App.css';
-
-//rosnąca pseudo baza danych
-const data = [
-  {
-    id: 1, 
-    title: "Wiadomość nr 1", 
-    body: "Zawartość wiadomości nr 1 ..."
-  },
-  {
-    id: 2, 
-    title: "Wiadomość nr 2", 
-    body: "Zawartość wiadomości nr 2 ..."
-  },
-  {
-    id: 3, 
-    title: "Wiadomość nr 3", 
-    body: "Zawartość wiadomości nr 3 ..."
-  },
-]
-
-setInterval(()=> {
-  const index = data.length + 1
-  data.push({
-    id: index, 
-    title: `Wiadomość nr ${index}`, 
-    body: `Zawartość wiadomości nr ${index} ...`
-  })
-  // console.log(data)
-}, 8000)
+import Word from './Word';
 
 class App extends Component {
   state = {
-   comments: [...data]
-  }
-
-  getData = () => {
-    
-    if(this.state.comments.length !== data.length){
-      console.log("aktualizacja")
-      this.setState({
-      comments: [...data]
-      })
-    }
-    else{
-      console.log("takie same dane - brak aktualizacji")
-    }
+    words: [],
+    isLoaded: false
   }
 
   componentDidMount(){
-    this.idI= setInterval(this.getData, 2000)
+    //dane zaciagnę po 3s (dla przykładu)
+    // setTimeout(this.fetchData, 3000)
+
+    fetch('data/words.json')
+    .then(response => response.json())
+    .then(data => {
+      this.setState({
+        words: data.words,
+        isLoaded: true
+      })
+    })
   }
 
-  //w razie likwidacji komponentu
-  componentWillUnmount(){
-    clearInterval(this.idI)
-  }
-  
+  // fetchData = () =>{
+  //   fetch('data/words.json')
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     this.setState({
+  //       words: data.words,
+  //       isLoaded: true
+  //     })
+  //   })
+  // }
+
   render() {
-    const comments = this.state.comments.map(comment => (
-      <div key={comment.id}>
-        <h4>{comment.title}</h4>
-        <div>{comment.body}</div>
-      </div>
+    console.log("render")
+    const words = this.state.words.map(word => (
+      <Word key={word.id} english={word.en} polish={word.pl}/>
     ))
-    // console.log(comments)
+   
     return (
-     <div className="App">
-       {comments.reverse()}
-     </div>
+     <ul>
+      {this.state.isLoaded ? words : "Wczytuję dane"}
+     </ul>
     );
   }
 }
