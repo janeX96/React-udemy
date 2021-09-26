@@ -1,48 +1,62 @@
 import React, { Component } from 'react';
 import './App.css';
-import Word from './Word';
+
 
 class App extends Component {
   state = {
-    words: [],
-    isLoaded: false
+   users: []
   }
 
   componentDidMount(){
-    //dane zaciagnę po 3s (dla przykładu)
-    // setTimeout(this.fetchData, 3000)
+   //this.requestData()
 
-    fetch('data/words.json')
-    .then(response => response.json())
-    .then(data => {
-      this.setState({
-        words: data.words,
-        isLoaded: true
-      })
-    })
+   const xhr = new XMLHttpRequest();
+   xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true)
+
+   xhr.onload = () =>{
+     console.log(xhr.status)
+     console.log(typeof xhr.response)
+     if(xhr.status === 200){
+       const users = JSON.parse(xhr.response)
+       // console.log(users)
+       this.setState({users})
+     }
+    
+   }
+   xhr.send(null)
   }
 
-  // fetchData = () =>{
-  //   fetch('data/words.json')
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     this.setState({
-  //       words: data.words,
-  //       isLoaded: true
-  //     })
-  //   })
+
+  // requestData = () => {
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true)
+
+  //   xhr.onload = () =>{
+  //     console.log(xhr.status)
+  //     console.log(typeof xhr.response)
+  //     if(xhr.status === 200){
+  //       const users = JSON.parse(xhr.response)
+  //       // console.log(users)
+  //       this.setState({users})
+  //     }
+     
+  //   }
+  //   xhr.send(null)
   // }
+  
 
   render() {
-    console.log("render")
-    const words = this.state.words.map(word => (
-      <Word key={word.id} english={word.en} polish={word.pl}/>
-    ))
+   const users = this.state.users.map(user=>(
+     <div key={user.id}>
+       <h4>{user.name}</h4>
+       <p>{user.address.city}</p>
+     </div>
+   ))
    
     return (
-     <ul>
-      {this.state.isLoaded ? words : "Wczytuję dane"}
-     </ul>
+     <>
+     {users}
+     </>
     );
   }
 }
