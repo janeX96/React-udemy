@@ -1,61 +1,50 @@
 import React, { Component } from 'react';
 import './App.css';
+import UsersList from './UsersList';
+import ButtonFetchUsers from './ButtonFetchUsers';
 
+
+const API = 'https://randomuser.me/api/?results=5'
 
 class App extends Component {
   state = {
-   users: []
+   users : null
   }
 
   componentDidMount(){
-   //this.requestData()
-
-   const xhr = new XMLHttpRequest();
-   xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true)
-
-   xhr.onload = () =>{
-     console.log(xhr.status)
-     console.log(typeof xhr.response)
-     if(xhr.status === 200){
-       const users = JSON.parse(xhr.response)
-       // console.log(users)
-       this.setState({users})
-     }
-    
-   }
-   xhr.send(null)
+ 
   }
-
-
-  // requestData = () => {
-  //   const xhr = new XMLHttpRequest();
-  //   xhr.open('GET', 'https://jsonplaceholder.typicode.com/users', true)
-
-  //   xhr.onload = () =>{
-  //     console.log(xhr.status)
-  //     console.log(typeof xhr.response)
-  //     if(xhr.status === 200){
-  //       const users = JSON.parse(xhr.response)
-  //       // console.log(users)
-  //       this.setState({users})
-  //     }
-     
-  //   }
-  //   xhr.send(null)
-  // }
   
 
+  handleDataFetch = () =>{
+    // console.log("click")
+    fetch(API)
+    .then(response => {
+      if(response.ok){
+        console.log(response)
+        return response
+      }
+      throw Error(response.status)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      this.setState({
+        users: data.results
+      })
+    })
+    .catch(error => console.log(error))
+    
+  }
+
   render() {
-   const users = this.state.users.map(user=>(
-     <div key={user.id}>
-       <h4>{user.name}</h4>
-       <p>{user.address.city}</p>
-     </div>
-   ))
+  const users = this.state.users
+
    
     return (
      <>
-     {users}
+     <ButtonFetchUsers click={this.handleDataFetch}/>
+     { users ? <UsersList users={users}/> : users}
      </>
     );
   }
