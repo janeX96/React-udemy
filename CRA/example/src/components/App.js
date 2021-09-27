@@ -8,6 +8,22 @@ class App extends Component {
     pass: "",
     accept: false,
 
+    errors : {
+      username: false,
+      email: false,
+      pass: false,
+      accept: false
+    }
+  }
+
+ 
+
+  messages = {
+    username_incorrect : 
+    "Nazwa musi być dłuższa niż 10 znaków i nie może zawierać spacji",
+    email_incorrect: "Brak @ w adresie email",
+    password_incorrect: "Hasło musi mieć 8 znaków",
+    accept_incorrect: "Należy zapoznać się z regulaminem"
   }
 
   componentDidMount(){
@@ -56,6 +72,8 @@ class App extends Component {
           value={this.state.userName}
           onChange={this.handleChange}
           />
+          {this.state.errors.username 
+          && <span>{this.messages.username_incorrect}</span>}
         </label>
         
         <label htmlFor="user">Twój email: 
@@ -66,6 +84,8 @@ class App extends Component {
           value={this.state.email}
           onChange={this.handleChange}
           />
+          {this.state.errors.username 
+          && <span>{this.messages.email_incorrect}</span>}
         </label>
 
         <label htmlFor="password">Twoje hasło: 
@@ -76,6 +96,8 @@ class App extends Component {
           value={this.state.pass}
           onChange={this.handleChange}
           />
+          {this.state.errors.username 
+          && <span>{this.messages.password_incorrect}</span>}
         </label>
         <label htmlFor="accept">
           <input onChange={this.handleChange}
@@ -86,6 +108,8 @@ class App extends Component {
           />
           Zapoznałem się z regulaminem
         </label>
+         {this.state.errors.username 
+          && <span>{this.messages.accept_incorrect}</span>}
         <button>Wyślij</button>
         
       </form>
