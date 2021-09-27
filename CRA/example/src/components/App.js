@@ -7,6 +7,7 @@ class App extends Component {
     email: "",
     pass: "",
     accept: false,
+    message: "",
 
     errors : {
       username: false,
@@ -25,12 +26,6 @@ class App extends Component {
     password_incorrect: "Hasło musi mieć 8 znaków",
     accept_incorrect: "Należy zapoznać się z regulaminem"
   }
-
-  componentDidMount(){
- 
-  }
-  
-
 
   handleChange = (e) => {
     console.log(e.target.type)
@@ -68,6 +63,7 @@ class App extends Component {
         email: "",
         pass: "",
         accept: false,
+        message: "Formularz został wysłany",
     
         errors : {
           username: false,
@@ -75,7 +71,7 @@ class App extends Component {
           pass: false,
           accept: false
       }})
-      console.log("Formularz wysłany")
+      // console.log("Formularz wysłany")
     }else{
       this.setState({
         errors : {
@@ -124,6 +120,17 @@ class App extends Component {
       accept
 
     })
+  }
+
+
+  componentDidUpdate(){
+    if(this.state.message !== ""){
+      setTimeout(() => {
+        this.setState({
+          message : ""
+        })
+      }, 3000);
+    }
   }
 
   render() {
@@ -177,8 +184,8 @@ class App extends Component {
          {this.state.errors.accept 
           && <span>{this.messages.accept_incorrect}</span>}
         <button >Wyślij</button>
-        
       </form>
+      {this.state.message && <h3>{this.state.message}</h3>}
      </>
     );
   }
