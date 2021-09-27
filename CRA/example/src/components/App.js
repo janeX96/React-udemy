@@ -55,9 +55,75 @@ class App extends Component {
     }
   }
 
-  handleSubmit = e =>{
-    e.prevantDefault()
-    console.log("działa")
+  handleSubmit = (e) =>{
+    e.preventDefault()
+
+    const validation = this.formValidation()
+    //console.log(validation)
+   // console.log("działa")
+
+    if(validation.correct){
+      this.setState({
+        userName: "",
+        email: "",
+        pass: "",
+        accept: false,
+    
+        errors : {
+          username: false,
+          email: false,
+          pass: false,
+          accept: false
+      }})
+      console.log("Formularz wysłany")
+    }else{
+      this.setState({
+        errors : {
+          username: !validation.username,
+          email: !validation.email,
+          pass: !validation.pass,
+          accept: !validation.accept
+        }
+      })
+    }
+  }
+
+  formValidation = () => {
+    let username = false
+    let email = false
+    let pass = false
+    let accept = false
+    let correct = false
+    
+    if(this.state.userName.length > 10 
+      && this.state.userName.indexOf(' ') === -1){
+        username = true
+    }
+
+    if(this.state.email.indexOf('@') !== -1){
+      email = true
+    }
+
+    if(this.state.pass.length === 8){
+      pass = true
+    }
+
+    if(this.state.accept){
+      accept = true
+    }
+
+    if(username && email && pass && accept){
+      correct = true
+    }
+
+    return({
+      correct,
+      username,
+      email,
+      pass,
+      accept
+
+    })
   }
 
   render() {
@@ -79,12 +145,12 @@ class App extends Component {
         <label htmlFor="user">Twój email: 
           <input 
           id="email" 
-          type="email" 
+          type="text" 
           name="email" 
           value={this.state.email}
           onChange={this.handleChange}
           />
-          {this.state.errors.username 
+          {this.state.errors.email 
           && <span>{this.messages.email_incorrect}</span>}
         </label>
 
@@ -96,7 +162,7 @@ class App extends Component {
           value={this.state.pass}
           onChange={this.handleChange}
           />
-          {this.state.errors.username 
+          {this.state.errors.pass 
           && <span>{this.messages.password_incorrect}</span>}
         </label>
         <label htmlFor="accept">
@@ -108,9 +174,9 @@ class App extends Component {
           />
           Zapoznałem się z regulaminem
         </label>
-         {this.state.errors.username 
+         {this.state.errors.accept 
           && <span>{this.messages.accept_incorrect}</span>}
-        <button>Wyślij</button>
+        <button >Wyślij</button>
         
       </form>
      </>
