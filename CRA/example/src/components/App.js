@@ -23,14 +23,14 @@ class App extends Component {
        {id: 2,
         text: "task3",
         date: '2018-05-11',
-        important: true,
+        important: false,
         active: true,
         finishDate: null
        },
        {id: 3,
         text: "task4",
         date: '2022-02-22',
-        important: true,
+        important: false,
         active: true,
         finishDate: null
        },
@@ -44,7 +44,7 @@ class App extends Component {
         {id: 5,
          text: "task6",
          date: '2018-05-11',
-         important: true,
+         important: false,
          active: true,
          finishDate: null
         },
