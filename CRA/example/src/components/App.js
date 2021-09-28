@@ -27,6 +27,27 @@ class App extends Component {
         active: true,
         finishDate: null
        },
+       {id: 3,
+        text: "task4",
+        date: '2022-02-22',
+        important: true,
+        active: true,
+        finishDate: null
+       },
+       {id: 4,
+         text: "task5",
+         date: '2019-03-15',
+         important: true,
+         active: true,
+         finishDate: null
+        },
+        {id: 5,
+         text: "task6",
+         date: '2018-05-11',
+         important: true,
+         active: true,
+         finishDate: null
+        },
     ]
   }
 
