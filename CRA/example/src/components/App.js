@@ -33,10 +33,41 @@ class App extends Component {
  
   deleteTask = (id) => {
     console.log("delete elementu o id: " + id)
+
+  //sposób 1
+
+    // //kopiuję tablicę ze state
+    // const tasks = [...this.state.tasks]
+    // //znajduję index elementu o danym id
+    // const index = tasks.findIndex(task=> task.id === id)
+    // //usuwam ten element ze skopiowanej tablicy
+    // tasks.splice(index,1)
+    // this.setState({tasks})
+
+  //sposób 2 
+
+    //kopia tablicy
+    let tasks = [...this.state.tasks]
+    //pozostawienie w tablicy tylko tych elementów,
+    // które spałniają warunek !==id
+    tasks = tasks.filter(task => task.id !== id)
+    this.setState({tasks})
+
+
   }
   
   changeTaskStatus = (id) => {
     console.log("done elementu o id: " + id)
+    //inny sposób kopiowania tablicy
+    const tasks = Array.from(this.state.tasks)
+    tasks.forEach(task => {
+      if(task.id === id){
+        task.active = false
+        task.finishDate = new Date().getTime()
+      }
+    })
+
+    this.setState({tasks})
   }
  
 
