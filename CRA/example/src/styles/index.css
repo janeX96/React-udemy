@@ -1,6 +1,10 @@
-/* body {
- font-size: 36;
- margin: 36px;
- padding: 0;
- text-align: center;
-} */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "open sans", sans-serif;
+    font-size: 20px;
+}
