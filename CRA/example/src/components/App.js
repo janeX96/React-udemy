@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 //npm install react-router-dom
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
+import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom'
 
 const Home = () => <h1>Strona startowa</h1>
 const News = () => <h1>Aktualności</h1>
@@ -19,9 +19,17 @@ class App extends Component {
         <header>
           <nav>
             <ul>
-             <li> <Link to="/">Start</Link></li>
-             <li> <Link to="/news">Aktualności</Link></li>
-             <li> <Link to="/contact">Kontakt</Link></li>
+             <li> 
+               <NavLink to="/" 
+                exact 
+                activeClassName="home_selected"
+                activeStyle={{
+                  backgroundColor:"gray",
+                  letterSpacing:"2px"
+                  }}>Start</NavLink>
+             </li>
+             <li> <NavLink to="/news" activeClassName="news_selected">Aktualności</NavLink></li>
+             <li> <NavLink to="/contact" activeClassName="contact_selected">Kontakt</NavLink></li>
             </ul>
           </nav>
         </header>
