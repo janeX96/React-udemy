@@ -1,38 +1,14 @@
 import React, { Component } from "react";
 import "./App.css";
-import Text from "./Text";
-import "bootstrap/dist/css/bootstrap.min.css";
-class App extends Component {
-  state = {
-    underline: false,
-  };
-  render() {
-    const text = "Hello!";
-    // let classes = "";
-    // if (this.state.underline) {
-    //   classes += " line";
-    // }
-    // if (text.length > 10) {
-    //   classes += " big";
-    // }
 
-    const classes = ["one"];
-    if (this.state.underline) {
-      classes.push("line");
-    }
-    if (text.length > 10) {
-      classes.push("big");
-    }
-    return (
-      <div
-        className="App"
-        onClick={() => this.setState({ underline: !this.state.underline })}
-      >
-        <h1 className={classes.join(" ")}>{text}</h1>
-        <Text />
-      </div>
-    );
-  }
-}
+const App = () => {
+  const [counter, setCounter] = React.useState(0);
+  return (
+    <div>
+      <h1>Prezentacja stanu w React</h1>
+      <p>Wartość stanu: {counter}</p>
+    </div>
+  );
+};
 
 export default App;
