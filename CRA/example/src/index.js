@@ -1,9 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Counter from "./Counter";
+import App from "./App";
 
-const startValue = 0;
-ReactDOM.render(
-  <Counter result={startValue} />,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));
