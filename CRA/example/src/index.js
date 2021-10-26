@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import ShoppingList from "./ShoppingList";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<ShoppingList />, document.getElementById("root"));
