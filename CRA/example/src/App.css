@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+}
+
+h1 {
+  text-transform: uppercase;
+}
+
+p.red {
+  color: red;
+}
